@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>徐敏恆 Min-Heng Hsu | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bgd-pink: #ff6699;
+            --bgd-blue: #00ccff;
+            --bgd-purple: #9966ff;
+            --bgd-dark: #0f0f0f;
+            --bgd-star: #fff100;
+            --bgd-white: #ffffff;
+        }
+
+        /* 自定義滑鼠 */
+        body {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="%23ff6699" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'), auto;
+            font-family: 'Noto Sans TC', sans-serif;
+            background: var(--bgd-dark);
+            color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* 滾動動畫基礎 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 導航欄 */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; background: rgba(0, 0, 0, 0.9);
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            border-bottom: 2px solid var(--bgd-pink);
+        }
+        .logo { font-weight: 900; font-size: 1.6rem; letter-spacing: 2px; }
+        .logo span { color: var(--bgd-pink); text-shadow: 0 0 10px var(--bgd-pink); }
+        nav ul { display: flex; list-style: none; }
+        nav ul li a { color: white; text-decoration: none; margin-left: 25px; font-weight: 700; transition: 0.3s; }
+        nav ul li a:hover { color: var(--bgd-star); transform: scale(1.1); }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;
+            background: radial-gradient(circle at center, #2c3e50 0%, #0f0f0f 100%);
+        }
+        .hero h1 { font-size: 5rem; font-weight: 900; text-shadow: 3px 3px 0 var(--bgd-pink); }
+        .hero h1 span { font-size: 2rem; color: var(--bgd-blue); display: block; margin-top: 10px; text-shadow: none; }
+
+        /* 傾斜區塊 */
+        .skew-section { padding: 120px 15%; position: relative; transform: skewY(-4deg); margin-top: -60px; margin-bottom: -60px; }
+        .skew-section .content { transform: skewY(4deg); }
+        .bg-pink { background: var(--bgd-pink); }
+        .bg-blue { background: var(--bgd-blue); }
+        .bg-purple { background: var(--bgd-purple); }
+        .bg-white { background: var(--bgd-white); color: #333; }
+
+        /* 卡片懸停發光效果 */
+        .card { 
+            background: rgba(0, 0, 0, 0.3); padding: 25px; border-radius: 20px; 
+            border: 2px solid transparent; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; overflow: hidden;
+        }
+        .card:hover { 
+            transform: scale(1.05); 
+            border-color: var(--bgd-star);
+            box-shadow: 0 0 20px var(--bgd-star);
+        }
+
+        /* 霓虹跑馬燈邊框 (用於強調地科) */
+        .neon-border {
+            position: relative; background: #222; padding: 5px; border-radius: 25px;
+            overflow: hidden;
+        }
+        .neon-border::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(transparent, transparent, transparent, var(--bgd-star));
+            animation: rotate 4s linear infinite;
+        }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
+        .neon-content { position: relative; background: #1a1a1a; border-radius: 20px; padding: 20px; z-index: 1; }
+
+        /* 圖片容器 */
+        .img-container {
+            width: 100%; height: 250px; background: #000; border-radius: 15px;
+            margin-bottom: 15px; overflow: hidden; border: 3px solid #fff;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card:hover .img-container img { transform: scale(1.1); }
+
+        /* 互動星星 */
+        .click-star { position: absolute; pointer-events: none; font-size: 30px; z-index: 9999; animation: star-pop 0.8s forwards; }
+        @keyframes star-pop { 
+            0% { transform: scale(0) rotate(0); opacity: 1; } 
+            100% { transform: scale(1.5) rotate(180deg) translateY(-100px); opacity: 0; } 
+        }
+
+        /* 對話框 */
+        .character-area { position: fixed; bottom: 20px; right: 20px; z-index: 2000; }
+        .speech-bubble {
+            background: #fff; color: #333; padding: 12px 18px; border-radius: 15px;
+            border: 3px solid var(--bgd-pink); margin-bottom: 8px; font-weight: bold;
+            display: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .char-icon { 
+            width: 60px; height: 60px; background: var(--bgd-blue); border-radius: 50%;
+            border: 3px solid #fff; font-size: 30px; display: flex; align-items: center;
+            justify-content: center; cursor: pointer; float: right;
+        }
+
+        footer { padding: 40px; text-align: center; font-size: 0.8rem; border-top: 1px solid #333; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } .hero h1 { font-size: 3rem; } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">MIN-HENG<span>.EECS</span></div>
+        <ul>
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#physics">PHYSICS</a></li>
+            <li><a href="#earth">EARTH SCI</a></li>
+            <li><a href="#projects">WORKS</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <p style="color:var(--bgd-pink); font-weight: 900; letter-spacing: 5px;">STEP INTO THE LIGHT</p>
+            <h1>徐敏恆 <span>Min-Heng Hsu</span></h1>
+            <div style="color:var(--bgd-star); font-size: 2rem; margin-top: 20px;">★ ★ ★ ★ ★</div>
+        </div>
+    </header>
+
+    <section id="about" class="skew-section bg-pink">
+        <div class="content reveal">
+            <h2 style="font-size: 3rem; font-weight: 900; margin-bottom: 20px;">關於我 / Profile</h2>
+            <p style="font-size: 1.2rem; max-width: 800px;">
+                深受電機工程軟硬體結合的魅力吸引。在物理辯論中磨練邏輯，在地科競賽中實踐控制技術。
+                我不是在做實驗，就是在前往實驗室的路上。
+            </p>
+        </div>
+    </section>
+
+    <section id="physics" class="skew-section bg-blue">
+        <div class="content">
+            <h2 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 30px;">物理辯論 / TYPT & IYPT</h2>
+            <div class="grid">
+                <div class="card reveal">
+                    <div class="img-container"><img src="physics1.jpg" alt="Photo" onerror="this.src='https://placehold.co/600x400?text=TYPT+Photo'"></div>
+                    <h3 style="color:var(--bgd-star)">TYPT 銅牌榮耀</h3>
+                    <p>針對 Spaghetti Accelerator 進行深度建模，以英文捍衛科學論點。</p>
+                </div>
+                <div class="card reveal">
+                    <div class="img-container"><img src="physics2.jpg" alt="Photo" onerror="this.src='https://placehold.co/600x400?text=IYPT+Camp'"></div>
+                    <h3 style="color:var(--bgd-star)">IYPT 國培營</h3>
+                    <p>在台師大物理系的高強度培訓中，體會到了將物理直覺轉化為數學模型的嚴謹性。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="earth" class="skew-section bg-purple">
+        <div class="content reveal">
+            <h2 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 30px;">地科學科競賽 / Earth Science</h2>
+            <div class="neon-border">
+                <div class="neon-content">
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
+                        <div style="flex: 1; min-width: 300px;">
+                            <div class="img-container" style="height: 300px; border-color: var(--bgd-star);">
+                                <img src="earth_work.jpg" alt="作品" onerror="this.src='https://placehold.co/600x400?text=Sun+Tracker+Image'">
+                            </div>
+                        </div>
+                        <div style="flex: 1.5;">
+                            <h3 style="font-size: 1.8rem; color: var(--bgd-star); margin-bottom: 10px;">太陽黑子自動追蹤經緯儀</h3>
+                            <p>這是我最具代表性的「自動化」作品。結合了地球科學的觀測需求與電機控制的硬體實作，成功獲得校內科展佳作並在學科競賽中大放異彩。</p>
+                            <div style="margin-top: 15px; display: flex; gap: 10px;">
+                                <span style="background:var(--bgd-pink); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem;">自動控制</span>
+                                <span style="background:var(--bgd-blue); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem;">天文觀測</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="skew-section bg-white">
+        <div class="content reveal">
+            <h2 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 30px;">更多作品 / Works</h2>
+            <div class="grid">
+                <div class="card reveal" style="background: #f0f0f0;">
+                    <div class="img-container"><img src="raman.jpg" alt="Raman" onerror="this.src='https://placehold.co/600x400?text=Raman+Spectrometer'"></div>
+                    <h3>自製拉曼光譜儀</h3>
+                    <p>利用雷射光譜技術探測物質分子結構，挑戰高精度光學對焦。</p>
+                </div>
+                <div class="card reveal" style="background: #f0f0f0;">
+                    <div class="img-container"><img src="club.jpg" alt="Club" onerror="this.src='https://placehold.co/600x400?text=Club+President'"></div>
+                    <h3>物辯社社長</h3>
+                    <p>引領學弟妹成長，將科學探究的火炬傳遞下去。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="character-area">
+        <div class="speech-bubble" id="bubble">Kira Kira~ 心跳不已的科學！</div>
+        <div class="char-icon" onclick="toggleSpeech()">🎸</div>
+    </div>
+
+    <footer>
+        <p>© 2026 Min-Heng Hsu | Designed for NTU EECS</p>
+    </footer>
+
+    <script>
+        // 1. 星星點擊特效
+        document.addEventListener('click', (e) => {
+            const star = document.createElement('div');
+            star.innerHTML = '★';
+            star.className = 'click-star';
+            star.style.left = e.pageX - 15 + 'px';
+            star.style.top = e.pageY - 15 + 'px';
+            const colors = ['#ff6699', '#00ccff', '#fff100'];
+            star.style.color = colors[Math.floor(Math.random()*3)];
+            document.body.appendChild(star);
+            setTimeout(() => star.remove(), 800);
+        });
+
+        // 2. 滾動淡入效果 (Reveal on scroll)
+        const reveal = () => {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', reveal);
+
+        // 3. 對話框切換
+        const quotes = [
+            "正在檢查太陽黑子的經緯度數據...",
+            "線性代數真的太有意思了！",
+            "物理辯論，就是要自信地表達！",
+            "今天的雷射對焦也很準確呢。",
+            "目標是...台大電機系的星空！"
+        ];
+        function toggleSpeech() {
+            const bubble = document.getElementById('bubble');
+            bubble.style.display = 'block';
+            bubble.innerText = quotes[Math.floor(Math.random() * quotes.length)];
+            setTimeout(() => { bubble.style.display = 'none'; }, 3000);
+        }
+
+        // 4. 平滑捲動
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        reveal(); // 初始化檢查
+    </script>
+</body>
+</html>
