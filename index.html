@@ -119,7 +119,7 @@
                 <div class="reveal-left">
                     <h2 style="font-size: 3.5rem; font-weight: 900; margin-bottom: 25px;">關於我 / Profile</h2>
                     <p style="font-size: 1.3rem; max-width: 850px; font-weight: 500;">
-                        我是<b>物理辯論社社長</b>。我擅長將物理現象公式化，並透過嵌入式系統實現精準控制。<br>從物辯全國銅牌到自製拉曼光譜儀，我的目標是透過工程解決最前沿的科學難題。
+                        我曾擔任<b>物理辯論社社長</b>。我擅長將物理現象公式化，並透過嵌入式系統實現精準控制。<br>從物辯全國銅牌到自製拉曼光譜儀，我的目標是透過工程解決最前沿的科學難題。
                     </p>
                 </div>
             </div>
@@ -240,6 +240,37 @@
     </footer>
 
    <script>
+       // --- 點擊噴發星星特效 (Click Star Burst) ---
+        document.addEventListener('mousedown', (e) => {
+            // 一次產生 10 顆星星
+            for (let i = 0; i < 10; i++) {
+                const star = document.createElement('div');
+                star.className = 'star-particle';
+                star.innerHTML = '★';
+                star.style.left = e.clientX + 'px';
+                star.style.top = e.clientY + 'px';
+                
+                // 隨機噴散位移與旋轉角度
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 50 + Math.random() * 50;
+                const moveX = Math.cos(angle) * distance;
+                const moveY = Math.sin(angle) * distance;
+                const rotate = (Math.random() - 0.5) * 500;
+                
+                star.style.setProperty('--x', moveX + 'px');
+                star.style.setProperty('--y', moveY + 'px');
+                star.style.setProperty('--r', rotate + 'deg');
+                
+                // 隨機顏色 (粉色或藍色)
+                star.style.color = Math.random() > 0.5 ? '#fff100' : '#ff6699';
+                
+                document.body.appendChild(star);
+                
+                // 動畫結束後移除
+                setTimeout(() => star.remove(), 800);
+            }
+        });
+
         // --- 頁面導航與顯示邏輯 ---
         function showPhysicsDetail() { switchPage('physics-detail-page'); }
         function showRamanDetail() { switchPage('raman-detail-page'); }
