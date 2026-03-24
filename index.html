@@ -30,173 +30,73 @@
             overflow-x: hidden;
         }
 
-        /* 滾動動畫載體 */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .reveal-left {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: all 0.8s ease-out;
-        }
-        .reveal.active, .reveal-left.active {
-            opacity: 1;
-            transform: translate(0);
-        }
+        /* 動畫 */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
+        .reveal-left { opacity: 0; transform: translateX(-50px); transition: all 0.8s ease-out; }
+        .reveal.active, .reveal-left.active { opacity: 1; transform: translate(0); }
 
-        /* 導航欄 */
+        /* 導航 */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5%; height: 70px;
-            background: rgba(10, 10, 11, 0.8);
-            backdrop-filter: blur(10px);
-            position: fixed; width: 100%; top: 0; z-index: 1000;
+            padding: 0 5%; height: 70px; background: rgba(10, 10, 11, 0.8);
+            backdrop-filter: blur(10px); position: fixed; width: 100%; top: 0; z-index: 1000;
             border-bottom: 1px solid rgba(255, 102, 153, 0.3);
         }
-        .logo { font-weight: 900; font-size: 1.4rem; letter-spacing: 2px; font-family: 'JetBrains Mono', monospace; }
+        .logo { font-weight: 900; font-size: 1.4rem; font-family: 'JetBrains Mono'; }
         .logo span { color: var(--bgd-pink); text-shadow: 0 0 15px var(--bgd-pink); }
-        
         nav ul { display: flex; list-style: none; }
-        nav ul li a { 
-            color: white; text-decoration: none; margin-left: 25px; 
-            font-weight: 700; font-size: 0.9rem; transition: var(--transition);
-            position: relative;
-        }
-        nav ul li a::after {
-            content: ''; position: absolute; bottom: -5px; left: 0; width: 0;
-            height: 2px; background: var(--bgd-pink); transition: 0.3s;
-        }
-        nav ul li a:hover::after { width: 100%; }
+        nav ul li a { color: white; text-decoration: none; margin-left: 25px; font-weight: 700; font-size: 0.9rem; transition: var(--transition); }
         nav ul li a:hover { color: var(--bgd-pink); }
 
-        /* 主要內容與子頁面切換控制 */
-        #main-content, #raman-detail-page {
-            transition: opacity 0.5s ease;
-        }
-        #raman-detail-page {
-            display: none;
-            min-height: 100vh;
-            padding-top: 100px;
-            background: var(--bgd-dark);
-        }
+        /* 頁面切換控制 */
+        #main-content, #raman-detail-page, #physics-detail-page, #earth-detail-page { transition: opacity 0.5s ease; }
+        #raman-detail-page, #physics-detail-page, #earth-detail-page { display: none; min-height: 100vh; padding-top: 100px; background: var(--bgd-dark); }
 
-        /* Hero Section */
-        .hero {
-            height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;
-            background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #0a0a0b 100%);
-            position: relative; overflow: hidden;
-        }
-        .hero::before {
-            content: ''; position: absolute; width: 200%; height: 200%;
-            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-            opacity: 0.3; animation: space-move 100s linear infinite;
-        }
-        @keyframes space-move { from { transform: translate(0,0); } to { transform: translate(-50%, -50%); } }
-
+        /* Hero */
+        .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #0a0a0b 100%); }
         .hero-content { position: relative; z-index: 2; }
-        .hero h1 { font-size: clamp(3rem, 10vw, 5.5rem); font-weight: 900; letter-spacing: -2px; line-height: 1.1; }
-        .hero h1 span { 
-            font-size: clamp(1.2rem, 4vw, 2.2rem); color: var(--bgd-blue); 
-            display: block; margin-top: 10px; font-weight: 400; font-family: 'JetBrains Mono';
-            letter-spacing: 2px;
-        }
-        .hero .subtitle { color: var(--bgd-pink); font-weight: 900; letter-spacing: 8px; margin-bottom: 20px; font-size: 0.9rem; }
+        .hero h1 { font-size: clamp(3rem, 10vw, 5.5rem); font-weight: 900; }
+        .hero h1 span { font-size: clamp(1.2rem, 4vw, 2.2rem); color: var(--bgd-blue); display: block; font-family: 'JetBrains Mono'; }
 
-        /* 區塊設計 */
+        /* 區塊樣式 */
         .skew-section { padding: 140px 10%; position: relative; margin-top: -80px; }
         .skew-section.skew-active { transform: skewY(-3deg); }
         .skew-section .content { transform: skewY(3deg); max-width: 1200px; margin: 0 auto; }
-        
         .bg-pink { background: linear-gradient(135deg, #ff6699 0%, #ff3377 100%); }
         .bg-blue { background: linear-gradient(135deg, #00ccff 0%, #0099ff 100%); }
         .bg-purple { background: linear-gradient(135deg, #9966ff 0%, #7733ff 100%); }
+        .bg-earth { background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); }
         .bg-white { background: var(--bgd-white); color: #1a1a1a; }
 
-        /* 標籤與卡片 */
-        .tag {
-            display: inline-block; padding: 4px 12px; border-radius: 50px;
-            font-size: 0.75rem; font-weight: bold; margin-right: 8px;
-            background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);
-        }
-
+        .tag { display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: bold; margin-right: 8px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; margin-top: 40px; }
+        .card { background: rgba(0, 0, 0, 0.4); padding: 30px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.1); transition: var(--transition); cursor: pointer; }
+        .card:hover { transform: translateY(-10px); border-color: var(--bgd-star); }
         
-        .card { 
-            background: rgba(0, 0, 0, 0.4); padding: 30px; border-radius: 24px; 
-            border: 1px solid rgba(255, 255, 255, 0.1); transition: var(--transition);
-            display: flex; flex-direction: column; cursor: pointer;
-        }
-        .card:hover { 
-            transform: translateY(-10px) scale(1.02); 
-            border-color: var(--bgd-star);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(255, 241, 0, 0.2);
-        }
-
-        .img-container {
-            width: 100%; height: 220px; background: #111; border-radius: 16px;
-            margin-bottom: 20px; overflow: hidden; position: relative;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
+        .img-container { width: 100%; height: 220px; background: #111; border-radius: 16px; margin-bottom: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
         .img-container img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s ease; }
-        .card:hover .img-container img { transform: scale(1.1); }
 
-        /* 子頁面專用樣式 */
+        /* 子頁面元件 */
         .detail-container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
-        .back-btn {
-            display: inline-flex; align-items: center; gap: 10px;
-            color: var(--bgd-blue); font-weight: 700; text-decoration: none;
-            margin-bottom: 30px; cursor: pointer; transition: 0.3s;
-        }
-        .back-btn:hover { color: var(--bgd-pink); transform: translateX(-5px); }
-        .detail-title { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 10px; color: var(--bgd-purple); }
-        .detail-subtitle { font-size: 1.2rem; color: var(--text-gray); margin-bottom: 40px; font-family: 'JetBrains Mono'; }
+        .back-btn { color: var(--bgd-blue); font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 30px; }
+        .back-btn:hover { color: var(--bgd-pink); }
+        .formula-card { background: #161618; padding: 25px; border-radius: 20px; border: 1px solid #333; text-align: center; }
+        .formula { font-size: 1.5rem; color: var(--bgd-blue); margin: 15px 0; font-family: 'JetBrains Mono'; }
         
-        .content-section { margin-bottom: 60px; }
-        .content-section h2 { border-left: 5px solid var(--bgd-pink); padding-left: 15px; margin-bottom: 25px; color: var(--bgd-white); }
-        
-        .theory-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; }
-        .formula-card { 
-            background: #1a1a1c; padding: 25px; border-radius: 20px; border: 1px solid #333;
-            text-align: center; font-family: 'JetBrains Mono';
-        }
-        .formula { font-size: 1.5rem; color: var(--bgd-blue); margin: 15px 0; }
-
-        .analysis-box { background: rgba(153, 102, 255, 0.1); padding: 30px; border-radius: 24px; border: 1px dashed var(--bgd-purple); }
-
-        /* 互動星星 */
-        .click-star { position: absolute; pointer-events: none; z-index: 9999; animation: star-pop 1s forwards; }
-        @keyframes star-pop { 
-            0% { transform: scale(0); opacity: 1; } 
-            100% { transform: scale(2) translate(var(--tx), var(--ty)); opacity: 0; } 
-        }
-
-        /* 浮動角色 */
-        .character-area { position: fixed; bottom: 30px; right: 30px; z-index: 2000; display: flex; flex-direction: column; align-items: flex-end; }
-        .speech-bubble {
-            background: white; color: #1a1a1a; padding: 15px 20px; border-radius: 20px;
-            border-bottom-right-radius: 2px; margin-bottom: 15px; font-weight: 700;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2); display: none;
-            max-width: 200px; font-size: 0.9rem;
-        }
-        .char-icon { 
-            width: 65px; height: 65px; background: var(--bgd-blue); border-radius: 50%;
-            border: 4px solid #fff; font-size: 32px; display: flex; align-items: center;
-            justify-content: center; cursor: pointer; transition: var(--transition);
-        }
+        .step-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 30px 0; }
+        .step-item { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; border: 1px solid #333; }
+        .step-num { color: var(--bgd-pink); font-weight: 900; font-size: 1.2rem; margin-bottom: 10px; display: block; }
 
         footer { padding: 60px 20px; text-align: center; background: #050505; color: var(--text-gray); }
 
-        @media (max-width: 992px) {
-            .theory-grid { grid-template-columns: 1fr; }
-            .skew-section { padding: 100px 5%; }
-        }
+        .character-area { position: fixed; bottom: 30px; right: 30px; z-index: 2000; }
+        .char-icon { width: 65px; height: 65px; background: var(--bgd-blue); border-radius: 50%; border: 4px solid #fff; font-size: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .speech-bubble { background: white; color: #1a1a1a; padding: 15px 20px; border-radius: 20px; border-bottom-right-radius: 2px; margin-bottom: 15px; font-weight: 700; display: none; max-width: 200px; font-size: 0.9rem; position: absolute; bottom: 80px; right: 0; }
     </style>
 </head>
 <body>
 
-    <nav id="navbar">
+    <nav>
         <div class="logo">MIN-HENG<span>.EECS</span></div>
         <ul id="nav-links">
             <li><a href="#about">ABOUT</a></li>
@@ -206,17 +106,11 @@
         </ul>
     </nav>
 
-    <!-- 主頁面內容 -->
     <div id="main-content">
         <header class="hero">
             <div class="hero-content">
-                <p class="subtitle">ENGINEERING THE FUTURE</p>
+                <p style="color:var(--bgd-pink); font-weight:900; letter-spacing:8px; margin-bottom:20px;">ENGINEERING THE FUTURE</p>
                 <h1 class="reveal">徐敏恆<br><span>Min-Heng Hsu</span></h1>
-                <div style="margin-top: 30px;">
-                    <span class="tag" style="background: var(--bgd-pink);">Physics</span>
-                    <span class="tag" style="background: var(--bgd-blue);">Automation</span>
-                    <span class="tag" style="background: var(--bgd-purple);">Research</span>
-                </div>
             </div>
         </header>
 
@@ -225,44 +119,45 @@
                 <div class="reveal-left">
                     <h2 style="font-size: 3.5rem; font-weight: 900; margin-bottom: 25px;">關於我 / Profile</h2>
                     <p style="font-size: 1.3rem; max-width: 850px; font-weight: 500;">
-                        「探索是工程的起點，而控制是科學的終點。」<br><br>
-                        我是一名對電機工程充滿熱情的學習者。從物辯競賽的理論建模，到自製太陽追蹤儀的硬體實作，我致力於將複雜的科學直覺轉化為精確的系統邏輯。
+                        我是<b>物理辯論社社長</b>。我擅長將物理現象公式化，並透過嵌入式系統實現精準控制。<br>從物辯全國銅牌到自製拉曼光譜儀，我的目標是透過工程解決最前沿的科學難題。
                     </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="earth" class="skew-section bg-earth skew-active">
+            <div class="content">
+                <h2 class="reveal" style="font-size: 2.8rem; font-weight: 900; margin-bottom: 40px;">地球科學 / Earth Science</h2>
+                <div class="grid">
+                    <div class="card reveal" onclick="showEarthDetail()">
+                        <div class="img-container"><img src="sun_tracker.jpg" alt="Sun Tracker" onerror="this.src='https://placehold.co/600x400/111/eee?text=Sun+Tracker+System'"></div>
+                        <h3 style="color:var(--bgd-star); font-size: 1.5rem; margin-bottom: 12px;">太陽黑子自動追蹤系統 ➔</h3>
+                        <p>結合 Arduino 與 PID 演算法，將經緯儀改造為具備自動補償與追蹤功能的天文觀測設備。</p>
+                        <div style="margin-top: 15px;"><span class="tag">Embedded System</span><span class="tag">PID Control</span></div>
+                    </div>
+                    <div class="card reveal">
+                        <div class="img-container"><img src="geoscience_camp.jpg" alt="Geoscience Camp" onerror="this.src='https://placehold.co/600x400/111/eee?text=Geoscience+Investigation'"></div>
+                        <h3 style="color:var(--bgd-star); font-size: 1.5rem; margin-bottom: 12px;">地科奧林匹亞培訓</h3>
+                        <p>深入鑽研地質與大氣物理，具備跨領域的自然科學觀察與數據分析能力。</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="physics" class="skew-section bg-blue skew-active">
             <div class="content">
-                <h2 class="reveal" style="font-size: 2.8rem; font-weight: 900; margin-bottom: 40px;">物理辯論 / Physics</h2>
+                <h2 class="reveal" style="font-size: 2.8rem; font-weight: 900; margin-bottom: 40px;">物理辯論 / Physics Fight</h2>
                 <div class="grid">
+                    <div class="card reveal" onclick="showPhysicsDetail()">
+                        <div class="img-container"><img src="spaghetti_main.jpg" alt="Spaghetti Accelerator" onerror="this.src='https://placehold.co/600x400/111/eee?text=Spaghetti+Accelerator'"></div>
+                        <h3 style="color:var(--bgd-star); font-size: 1.5rem; margin-bottom: 12px;">義大利麵加速器 ➔</h3>
+                        <p>探討義大利麵在彎曲管路中的斷裂機制與噴射速度。全國銅牌核心研究項目。</p>
+                        <div style="margin-top: 15px;"><span class="tag">Fracture Mechanics</span><span class="tag">Energy Ratio</span></div>
+                    </div>
                     <div class="card reveal">
-                        <div class="img-container"><img src="physics1.jpg" alt="TYPT" onerror="this.src='https://placehold.co/600x400/111/eee?text=TYPT+National+Final'"></div>
-                        <h3 style="color:var(--bgd-star); font-size: 1.5rem; margin-bottom: 12px;">物理辯論全國銅牌</h3>
-                        <p>針對「Spaghetti Accelerator」題目進行建模，結合高速攝影分析與力學模擬。</p>
-                    </div>
-                    <div class="card reveal" style="transition-delay: 0.2s;">
-                        <div class="img-container"><img src="physics2.jpg" alt="IYPT" onerror="this.src='https://placehold.co/600x400/111/eee?text=IYPT+Training+Camp'"></div>
-                        <h3 style="color:var(--bgd-star); font-size: 1.5rem; margin-bottom: 12px;">IYPT 國培營選拔</h3>
-                        <p>進入台師大物理系進行深度培訓，學習嚴謹實驗設計與資料處理。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="earth" class="skew-section bg-purple skew-active">
-            <div class="content">
-                <h2 class="reveal" style="font-size: 2.8rem; font-weight: 900; margin-bottom: 40px;">核心技術 / Earth Science</h2>
-                <div class="featured-project reveal">
-                    <div class="featured-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
-                        <div class="img-container" style="height: 350px; margin-bottom: 0;">
-                            <img src="earth_work.jpg" alt="Sun Tracker" onerror="this.src='https://placehold.co/600x600/111/eee?text=Sun+Tracker+Prototyping'">
-                        </div>
-                        <div>
-                            <h3 style="font-size: 2rem; color: var(--bgd-star); margin-bottom: 15px;">太陽黑子自動追蹤經緯儀</h3>
-                            <p style="margin-bottom: 20px; font-size: 1.1rem;">結合 Arduino 控制與 PID 演算法，實現對太陽黑子的自動化觀測。</p>
-                            <span class="tag" style="background:var(--bgd-pink)">Embedded System</span>
-                        </div>
+                        <div class="img-container"><img src="physics_club.jpg" alt="Club Leadership" onerror="this.src='https://placehold.co/600x400/111/eee?text=Physics+Club+President'"></div>
+                        <h3 style="color:var(--bgd-star); font-size: 1.5rem; margin-bottom: 12px;">物辯社社長經歷</h3>
+                        <p>統籌全國賽團隊培訓，帶領隊伍進行科學建模、數據擬合與英文攻防對辯訓練。</p>
                     </div>
                 </div>
             </div>
@@ -270,192 +165,121 @@
 
         <section id="projects" class="skew-section bg-white skew-active">
             <div class="content">
-                <h2 class="reveal" style="font-size: 2.8rem; font-weight: 900; margin-bottom: 40px; color: #111;">更多足跡 / Other Works</h2>
+                <h2 class="reveal" style="font-size: 2.8rem; font-weight: 900; margin-bottom: 40px; color: #111;">研究作品 / Research</h2>
                 <div class="grid">
                     <div class="card reveal" onclick="showRamanDetail()" style="background: #f8f8f8; color: #333; border: 1px solid #ddd;">
-                        <div class="img-container"><img src="raman.jpg" alt="Raman" onerror="this.src='https://placehold.co/600x400/eee/333?text=Quantum+Fingerprint'"></div>
+                        <div class="img-container"><img src="Raman.jpg" alt="Raman" onerror="this.src='https://placehold.co/600x400/eee/333?text=Raman.jpg+Missing'"></div>
                         <h3 style="color:var(--bgd-purple); margin-bottom: 10px;">Quantum Fingerprint: 自製拉曼光譜儀 ➔</h3>
-                        <p>探討分子振動能階與斯托克斯位移，將雷射光散射轉化為分子身分證。</p>
+                        <p>設計 DIY 分光計與光路系統，觀測分子的量子振動指紋。</p>
                     </div>
-                    <div class="card reveal" style="background: #f8f8f8; color: #333; border: 1px solid #ddd;">
-                        <div class="img-container"><img src="club.jpg" alt="Club" onerror="this.src='https://placehold.co/600x400/eee/333?text=Leadership'"></div>
-                        <h3 style="color:var(--bgd-purple); margin-bottom: 10px;">物辯社社長</h3>
-                        <p>負責課程規劃與學弟妹培訓，具備團隊領導與溝通能力。</p>
+                    <div class="card reveal" onclick="showEarthDetail()" style="background: #f8f8f8; color: #333; border: 1px solid #ddd;">
+                        <div class="img-container"><img src="tracker_exp.jpg" alt="Tracker" onerror="this.src='https://placehold.co/600x400/eee/333?text=Tracker+Project'"></div>
+                        <h3 style="color:var(--bgd-purple); margin-bottom: 10px;">自動化觀測經緯儀 ➔</h3>
+                        <p>將電機控制技術導入地科觀察，實現精密追蹤系統。</p>
                     </div>
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- 子頁面：Quantum Fingerprint (拉曼光譜儀詳細內容) -->
+    <div id="earth-detail-page">
+        <div class="detail-container">
+            <div class="back-btn" onclick="hideAllDetails()">← 返回作品集</div>
+            <h1 style="font-size: 3rem; color: #2ecc71; margin-bottom: 10px;">Solar Tracker System</h1>
+            <p style="color: var(--text-gray); font-family: 'JetBrains Mono'; margin-bottom: 40px;">Automatic Sunspot Observation with Arduino & PID Control</p>
+            <section class="reveal active">
+                <h2 style="border-left: 5px solid #2ecc71; padding-left: 15px; margin-bottom: 25px;">技術亮點</h2>
+                <div class="step-grid">
+                    <div class="step-item"><span class="step-num" style="color:#2ecc71">Sensor Array</span><p>設計十字型感測結構。</p></div>
+                    <div class="step-item"><span class="step-num" style="color:#2ecc71">PID Tuning</span><p>優化步進馬達回饋迴路。</p></div>
+                    <div class="step-item"><span class="step-num" style="color:#2ecc71">Mechanical</span><p>高減速比齒輪組設計。</p></div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div id="physics-detail-page">
+        <div class="detail-container">
+            <div class="back-btn" onclick="hideAllDetails()">← 返回作品集</div>
+            <h1 style="font-size: 3rem; color: var(--bgd-blue); margin-bottom: 10px;">Spaghetti Accelerator</h1>
+            <p style="color: var(--text-gray); font-family: 'JetBrains Mono'; margin-bottom: 40px;">TYPT 2025 Problem #13</p>
+            <section class="reveal active">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div class="formula-card"><p>能量分配定比</p><div class="formula">T_trans : T_rot = 3 : 1</div></div>
+                    <div class="formula-card"><p>楊氏模數</p><div class="formula">E ≈ 3.4 GPa</div></div>
+                </div>
+            </section>
+        </div>
+    </div>
+
     <div id="raman-detail-page">
         <div class="detail-container">
-            <div class="back-btn" onclick="hideRamanDetail()">← 返回作品集</div>
-            
-            <h1 class="detail-title">Quantum Fingerprint</h1>
-            <p class="detail-subtitle">Problem #17, TYPT 2025 - Molecular Spectroscopy & DIY Instrument</p>
-            
-            <section class="content-section reveal active">
-                <h2>理論模型 (Theoretical Model)</h2>
-                <div class="theory-grid">
-                    <div class="formula-card">
-                        <p>分子極化率 (Polarizability)</p>
-                        <div class="formula">P = αE</div>
-                        <p style="font-size: 0.85rem; color: #888;">分子受雷射電場影響產生的誘導電矩。</p>
-                    </div>
-                    <div class="formula-card">
-                        <p>拉曼位移 (Raman Shift)</p>
-                        <div class="formula">Δν = (1/λ₀ - 1/λ₁)</div>
-                        <p style="font-size: 0.85rem; color: #888;">散射光與激發光的波數差值。</p>
-                    </div>
+            <div class="back-btn" onclick="hideAllDetails()">← 返回作品集</div>
+            <h1 style="font-size: 3rem; color: var(--bgd-purple); margin-bottom: 10px;">Quantum Fingerprint</h1>
+            <p style="color: var(--text-gray); font-family: 'JetBrains Mono'; margin-bottom: 40px;">DIY Raman Spectrometer & Molecular Analysis</p>
+            <section class="reveal active">
+                <h2 style="border-left: 5px solid var(--bgd-purple); padding-left: 15px; margin-bottom: 25px;">系統實體與光路設計 (Setup)</h2>
+                <div class="img-container" style="height: auto; min-height: 400px; border: 2px solid var(--bgd-purple);">
+                    <img src="Raman.jpg" alt="Raman Spectrometer Setup" onerror="this.src='https://placehold.co/1200x600/111/fff?text=Raman.jpg+Not+Found'">
                 </div>
-                <p>拉曼散射的核心在於<b>斯托克斯位移 (Stokes Scattering)</b>：當入射光子與分子發生非彈性碰撞，能量轉移至分子的振動能階（SHM 模型），導致散射光頻率下降（紅移）。</p>
-            </section>
-
-            <section class="content-section reveal">
-                <h2>系統架構 (DIY Raman Spectrometer)</h2>
-                <div class="img-container" style="height: auto; min-height: 300px; border: 2px solid var(--bgd-purple);">
-                    <img src="Raman.jpg" alt="Raman System Architecture" onerror="this.src='https://placehold.co/1200x600/111/fff?text=Raman.jpg+Not+Found'">
-                </div>
-                <div class="tech-stack" style="margin-top: 20px;">
-                    <div class="tech-box">
-                        <h4 style="color: var(--bgd-blue);">光學濾除 (Long-pass Filter)</h4>
-                        <p style="font-size: 0.9rem;">使用 532nm Long-pass Filter 阻擋比拉曼訊號強 10⁶ 倍的瑞利散射光，確保感測器不飽和。</p>
-                    </div>
-                    <div class="tech-box">
-                        <h4 style="color: var(--bgd-pink);">光柵分光 (Diffraction Grating)</h4>
-                        <p style="font-size: 0.9rem;">透過 1200 line/mm 光柵將散射光展開，將波長資訊轉換為空間位置訊息。</p>
-                    </div>
+                <div style="background: rgba(153, 102, 255, 0.05); padding: 30px; border-radius: 20px; margin-top: 30px; border: 1px solid rgba(153,102,255,0.2);">
+                    <p>透過 **532nm 雷射** 與 **1200 lines/mm 光柵**，我成功擷取了聚合物的位移峰值。這項專案展示了我從光路計算、濾光片選用到訊號處理的完整工程流程。</p>
                 </div>
             </section>
-
-            <section class="content-section reveal">
-                <h2>數據分析 (Data & Results)</h2>
-                <div class="analysis-box">
-                    <h4 style="margin-bottom: 15px; color: var(--bgd-star);">Styrofoam (Polystyrene) 鑑定</h4>
-                    <p>在實驗中，我們成功觀測到保麗龍特有的特徵峰（例如 1001 cm⁻¹ 的苯環振動）。</p>
-                    <ul style="margin-top: 15px; margin-left: 20px; font-size: 0.95rem;">
-                        <li><b>觀察現象：</b> 光強度隨波數位移產生的特定 Peak，對應 C-C 與 C-H 鍵的振動。</li>
-                        <li><b>分析技術：</b> 使用 Python 的基線扣除 (Baseline Subtraction) 處理聚合物產生的強螢光背景。</li>
-                        <li><b>結論：</b> 拉曼光譜能精確識別化學鍵，如同分子的「量子指紋」。</li>
-                    </ul>
-                </div>
-            </section>
-
-            <div class="back-btn" onclick="hideRamanDetail()" style="margin-top: 40px; opacity: 0.6;">← 點擊返回看其他作品</div>
         </div>
     </div>
 
     <div class="character-area">
-        <div class="speech-bubble" id="bubble">Kira~ 歡迎來到我的科學世界！</div>
+        <div class="speech-bubble" id="bubble">Kira~ 照片都設定好囉！</div>
         <div class="char-icon" onclick="toggleSpeech()">⚡</div>
     </div>
 
     <footer>
-        <div style="margin-bottom: 20px; font-weight: 900; color: white;">MIN-HENG HSU</div>
+        <div style="font-weight: 900; color: white;">MIN-HENG HSU</div>
         <p>© 2026 Portfolio | Designed for NTU EECS Admission</p>
     </footer>
 
     <script>
-        // --- 子頁面切換邏輯 ---
-        function showRamanDetail() {
-            const main = document.getElementById('main-content');
-            const detail = document.getElementById('raman-detail-page');
-            const navLinks = document.getElementById('nav-links');
-            
-            // 先滾動到頂部
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            setTimeout(() => {
-                main.style.opacity = '0';
-                setTimeout(() => {
-                    main.style.display = 'none';
-                    detail.style.display = 'block';
-                    navLinks.style.opacity = '0.3'; // 變淡表示已進入子頁面
-                    navLinks.style.pointerEvents = 'none';
-                    
-                    // 子頁面淡入
-                    detail.style.opacity = '0';
-                    setTimeout(() => detail.style.opacity = '1', 50);
-                }, 400);
-            }, 100);
-        }
+        function showPhysicsDetail() { switchPage('physics-detail-page'); }
+        function showRamanDetail() { switchPage('raman-detail-page'); }
+        function showEarthDetail() { switchPage('earth-detail-page'); }
 
-        function hideRamanDetail() {
+        function switchPage(pageId) {
             const main = document.getElementById('main-content');
-            const detail = document.getElementById('raman-detail-page');
-            const navLinks = document.getElementById('nav-links');
-            
-            detail.style.opacity = '0';
+            const targetPage = document.getElementById(pageId);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            main.style.opacity = '0';
             setTimeout(() => {
-                detail.style.display = 'none';
-                main.style.display = 'block';
-                navLinks.style.opacity = '1';
-                navLinks.style.pointerEvents = 'auto';
-                
-                setTimeout(() => {
-                    main.style.opacity = '1';
-                    // 返回主頁時滾動到作品區塊
-                    const projectSection = document.getElementById('projects');
-                    window.scrollTo({ top: projectSection.offsetTop - 70, behavior: 'smooth' });
-                }, 50);
+                main.style.display = 'none';
+                targetPage.style.display = 'block';
+                targetPage.style.opacity = '0';
+                setTimeout(() => targetPage.style.opacity = '1', 50);
             }, 400);
         }
 
-        // --- 點擊星星特效 ---
-        document.addEventListener('click', (e) => {
-            const star = document.createElement('div');
-            star.innerHTML = '✦';
-            star.className = 'click-star';
-            star.style.left = e.pageX + 'px';
-            star.style.top = e.pageY + 'px';
-            
-            const tx = (Math.random() - 0.5) * 150 + 'px';
-            const ty = (Math.random() - 0.5) * 150 + 'px';
-            star.style.setProperty('--tx', tx);
-            star.style.setProperty('--ty', ty);
-            
-            const colors = ['#ff6699', '#00ccff', '#fff100'];
-            star.style.color = colors[Math.floor(Math.random()*colors.length)];
-            
-            document.body.appendChild(star);
-            setTimeout(() => star.remove(), 1000);
-        });
+        function hideAllDetails() {
+            const main = document.getElementById('main-content');
+            const pages = [document.getElementById('physics-detail-page'), document.getElementById('raman-detail-page'), document.getElementById('earth-detail-page')];
+            pages.forEach(p => p.style.opacity = '0');
+            setTimeout(() => {
+                pages.forEach(p => p.style.display = 'none');
+                main.style.display = 'block';
+                main.style.opacity = '1';
+                window.scrollTo({ top: document.getElementById('projects').offsetTop - 70, behavior: 'smooth' });
+            }, 400);
+        }
 
-        // --- 滾動偵測 ---
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
         }, { threshold: 0.15 });
-
         document.querySelectorAll('.reveal, .reveal-left').forEach(el => observer.observe(el));
 
-        // --- 對話框邏輯 ---
-        const quotes = [
-            "拉曼位移 Δν 正是分子的身分證。",
-            "斯托克斯散射是光的非彈性碰撞結果。",
-            "濾波器是系統最關鍵的一環，用來阻隔瑞利散射。",
-            "目標：台大電機系！★"
-        ];
-        
         function toggleSpeech() {
             const bubble = document.getElementById('bubble');
             bubble.style.display = 'block';
-            bubble.innerText = quotes[Math.floor(Math.random() * quotes.length)];
+            bubble.innerText = "Raman.jpg 已連結！快去檢查圖片顯示吧！";
             setTimeout(() => { bubble.style.display = 'none'; }, 3000);
         }
-
-        // --- 平滑捲動 ---
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if(target) {
-                    window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
-                }
-            });
-        });
     </script>
 </body>
 </html>
