@@ -239,7 +239,8 @@
         <p>© 2026 Portfolio | Designed for NTU EECS Admission</p>
     </footer>
 
-    <script>
+   <script>
+        // --- 頁面導航與顯示邏輯 ---
         function showPhysicsDetail() { switchPage('physics-detail-page'); }
         function showRamanDetail() { switchPage('raman-detail-page'); }
         function showEarthDetail() { switchPage('earth-detail-page'); }
@@ -265,40 +266,57 @@
                 pages.forEach(p => p.style.display = 'none');
                 main.style.display = 'block';
                 main.style.opacity = '1';
-                window.scrollTo({ top: document.getElementById('projects').offsetTop - 70, behavior: 'smooth' });
+                // 預設回到 Research 區塊
+                const target = document.getElementById('projects');
+                if (target) window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
             }, 400);
         }
 
+        // --- 滾動偵測 (Intersection Observer) ---
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
         }, { threshold: 0.15 });
+
         document.querySelectorAll('.reveal, .reveal-left').forEach(el => observer.observe(el));
 
+        // --- 對話框邏輯與語句池 ---
+        const quotes = [
+            "拉曼位移 Δν 正是分子的身分證。",
+            "斯托克斯散射是光的非彈性碰撞結果。",
+            "濾波器是系統最關鍵的一環，用來阻隔瑞利散射。",
+            "目標：台大電機系！★",
+            "透過 PID 控制，我也能精準追蹤星辰。",
+            "地科不只是觀察，更是自動化控制的應用場域。"
+        ];
+        
         function toggleSpeech() {
             const bubble = document.getElementById('bubble');
             bubble.style.display = 'block';
-            bubble.innerText = "Raman.jpg 已連結！快去檢查圖片顯示吧！";
+            bubble.innerText = quotes[Math.floor(Math.random() * quotes.length)];
             setTimeout(() => { bubble.style.display = 'none'; }, 3000);
         }
-        // --- 點擊星星特效 ---
-        document.addEventListener('click', (e) => {
-            const star = document.createElement('div');
-            star.innerHTML = '✦';
-            star.className = 'click-star';
-            star.style.left = e.pageX + 'px';
-            star.style.top = e.pageY + 'px';
-            
-            const tx = (Math.random() - 0.5) * 150 + 'px';
-            const ty = (Math.random() - 0.5) * 150 + 'px';
-            star.style.setProperty('--tx', tx);
-            star.style.setProperty('--ty', ty);
-            
-            const colors = ['#ff6699', '#00ccff', '#fff100'];
-            star.style.color = colors[Math.floor(Math.random()*colors.length)];
-            
-            document.body.appendChild(star);
-            setTimeout(() => star.remove(), 1000);
-        }
+
+        // --- 頂部導航平滑捲動 (Smooth Scroll) ---
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                // 如果是在詳情頁面，先回到主頁
+                const isDetailPage = document.getElementById('main-content').style.display === 'none';
+                if (isDetailPage) {
+                    hideAllDetails();
+                }
+                
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if(target) {
+                        window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
+                    }
+                }
+            });
+        });
     </script>
 </body>
 </html>
